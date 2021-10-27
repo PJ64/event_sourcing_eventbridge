@@ -59,8 +59,8 @@ From the command prompt execute the following command: **cdk destroy**
 ## Deployed Resources
 |	Identifier	|	Service	|	Type	|
 |	:---	|	:---	|	:---	|
-|	EventSourcingEventbridgeS-AWS679f53fac002430cb0da5-hjzj0RdvlUXq	|	Lambda	|	Function	|
-|	EventSourcingEventbridgeS-AWS679f53fac002430cb0da5-NDPUAN1I89VO	|	IAM	|	Role	|
+|	EventSourcingEventbridgeS-aws generated name	|	Lambda	|	Function	|
+|	EventSourcingEventbridgeS-aws generated name	|	IAM	|	Role	|
 |	event_sourcing_eventbridge	|	DynamoDB	|	Table	|
 |	event_sourcing_eventbridge_api_role	|	IAM	|	Role	|
 |	/demo/event_sourcing_eventbridge	|	Logs	|	LogGroup	|
