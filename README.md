@@ -1,9 +1,10 @@
 ## Example
 This example is designed for a concept mobile application called Skip the Line, which allows user to pre-order takeaway coffee while they are in transit. Just as the train pulls into the station, the user can order a coffee and pick it up on the way past the coffee shop.
 
-An API Gateway endpoint uses Amazon EventBridge to invoke Lambda functions when events are added to the EventBus. In this example the client application includes the attribute ``` 'eventtype':[new_order] ```, which the EventBus matches to the rules that are used to trigger the targets, in this case the Lambda functions.The advantage to using this pattern is that the API Gateway is configured with a single API endpoint for the client. The EventBridge handles routing of the request to the Lambda functions using rules. The EventBus rules can be easily created and mofified, simplifying the process of building event-driven architectures
+In this example Amazon EventBridge rules are used to invoke Lambda functions when events are added to the EventBus. The EventBus sits behind a HTTP API endpoint, the client application pass a request to the api endpoint which includes the attribute ``` 'eventtype':[new_order] ```. The EventBus matches the attribute to a rule which then triggers a Lambda target. The advantage to using this pattern is that the API Gateway is configured with a single API endpoint for the client. The EventBridge handles routing of the request to the Lambda functions using rules. The EventBus rules can be easily created and modified, which simplifies the process of building event-driven architectures
 
-The Amazon DynamoDB table is partitioned on an accountid attribute and also includes a sort key on the vendorid attribute, together they form the primary key. The example also demonstrates using Python to put, update, get and delete items in Amazon DynamoDB.
+The Amazon DynamoDB table is partitioned on an accountid attribute and also includes a sort key on the vendorid attribute, together they form the primary key. The example also demonstrates using Python to put, update and delete items in Amazon DynamoDB.
+
 
 
 ![architecture](./images/architecture_1.png "Architecture")

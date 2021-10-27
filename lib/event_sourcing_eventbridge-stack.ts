@@ -80,11 +80,23 @@ export class EventSourcingEventbridgeStack extends cdk.Stack {
       actions: ['dynamodb:UpdateItem'],
     }));
 
+    const lambda_delete_service_role = new Role(this, "lambda_delete_service_role", {
+      assumedBy: new ServicePrincipal("lambda.amazonaws.com"),
+      roleName: "event_sourcing_eventbridge_lambda_delete"
+    });
+
+    lambda_delete_service_role.addManagedPolicy(ManagedPolicy.fromAwsManagedPolicyName("service-role/AWSLambdaBasicExecutionRole"));
+
+    lambda_delete_service_role.addToPolicy(new PolicyStatement({
+      resources: [dynamoTable.tableArn],
+      actions: ['dynamodb:DeleteItem'],
+    }));
+
     /* Lambda function */
     const lambdaPutFunction = new Function(this, 'lambdaPutFunction', {
       runtime: Runtime.PYTHON_3_7,
       handler: "lambda_function.lambda_handler",
-      code: Code.fromAsset("resources/function_item_put"),
+      code: Code.fromAsset("resources/function_put_item"),
       functionName: "event_sourcing_eventbridge_put_item",
       role: lambda_put_service_role,
       environment: {
@@ -95,9 +107,20 @@ export class EventSourcingEventbridgeStack extends cdk.Stack {
     const lambdaUpdateFunction = new Function(this, 'lambdaUpdateFunction', {
       runtime: Runtime.PYTHON_3_7,
       handler: "lambda_function.lambda_handler",
-      code: Code.fromAsset("resources/function_item_update"),
+      code: Code.fromAsset("resources/function_update_item"),
       functionName: "event_sourcing_eventbridge_update_item",
       role: lambda_update_service_role,
+      environment: {
+        'TABLENAME': dynamoTable.tableName
+      }
+    });
+
+    const lambdaDeleteFunction = new Function(this, 'lambdaDeleteFunction', {
+      runtime: Runtime.PYTHON_3_7,
+      handler: "lambda_function.lambda_handler",
+      code: Code.fromAsset("resources/function_delete_item"),
+      functionName: "event_sourcing_eventbridge_delete_item",
+      role: lambda_delete_service_role,
       environment: {
         'TABLENAME': dynamoTable.tableName
       }
