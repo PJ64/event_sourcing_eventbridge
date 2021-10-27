@@ -68,7 +68,10 @@ From the command prompt execute the following command: **cdk destroy**
 |	event_sourcing_eventbridge|event_sourcing_eventbridge_logger	|	Events	|	Rule	|
 |	event_sourcing_eventbridge_put_item	|	Lambda	|	Function	|
 |	event_sourcing_eventbridge_update_item	|	Lambda	|	Function	|
+|	event_sourcing_eventbridge_delete_item	|	Lambda	|	Function	|
 |	event_sourcing_eventbridge_lambda_put	|	IAM	|	Role	|
 |	event_sourcing_eventbridge_lambda_update	|	IAM	|	Role	|
+|	event_sourcing_eventbridge_lambda_delete	|	IAM	|	Role	|
 |	event_sourcing_eventbridge|event_sourcing_eventbridge_new_order	|	Events	|	Rule	|
 |	event_sourcing_eventbridge|event_sourcing_eventbridge_update_order	|	Events	|	Rule	|
+|	event_sourcing_eventbridge|event_sourcing_eventbridge_delete_order	|	Events	|	Rule	|
