@@ -1,5 +1,10 @@
 ## Example
-This example demonstrates using Amazon EventBridge to invoke Lambda functions when events are added to the EventBus. In the example event rules are used to trigger the Lambda functions. There is an event rule created for new orders and a rule create for update operations. One Lambda function inserts into a DynamoDB table while the other function updates the item in the table.
+This example is designed for a concept mobile application called Skip the Line, which allows user to pre-order takeaway coffee while they are in transit. Just as the train pulls into the station, the user can order a coffee and pick it up on the way past the coffee shop.
+
+An API Gateway endpoint uses Amazon EventBridge to invoke Lambda functions when events are added to the EventBus. In this example the client application includes the attribute ``` 'eventtype':[new_order] ```, which the EventBus matches to the rules that are used to trigger the targets, in this case the Lambda functions.The advantage to using this pattern is that the API Gateway is configured with a single API endpoint for the client. The EventBridge handles routing of the request to the Lambda functions using rules. The EventBus rules can be easily created and mofified, simplifying the process of building event-driven architectures
+
+The Amazon DynamoDB table is partitioned on an accountid attribute and also includes a sort key on the vendorid attribute, together they form the primary key. The example also demonstrates using Python to put, update, get and delete items in Amazon DynamoDB.
+
 
 ![architecture](./images/architecture_1.png "Architecture")
 
@@ -50,3 +55,19 @@ Open the Jupyter Notebook in the **jupyter_notebook directory** follow the instr
 
 ## Cleanup
 From the command prompt execute the following command: **cdk destroy**
+
+## Deployed Resources
+|	Identifier	|	Service	|	Type	|
+|	:---	|	:---	|	:---	|
+|	EventSourcingEventbridgeS-AWS679f53fac002430cb0da5-hjzj0RdvlUXq	|	Lambda	|	Function	|
+|	EventSourcingEventbridgeS-AWS679f53fac002430cb0da5-NDPUAN1I89VO	|	IAM	|	Role	|
+|	event_sourcing_eventbridge	|	DynamoDB	|	Table	|
+|	event_sourcing_eventbridge_api_role	|	IAM	|	Role	|
+|	/demo/event_sourcing_eventbridge	|	Logs	|	LogGroup	|
+|	event_sourcing_eventbridge|event_sourcing_eventbridge_logger	|	Events	|	Rule	|
+|	event_sourcing_eventbridge_put_item	|	Lambda	|	Function	|
+|	event_sourcing_eventbridge_update_item	|	Lambda	|	Function	|
+|	event_sourcing_eventbridge_lambda_put	|	IAM	|	Role	|
+|	event_sourcing_eventbridge_lambda_update	|	IAM	|	Role	|
+|	event_sourcing_eventbridge|event_sourcing_eventbridge_new_order	|	Events	|	Rule	|
+|	event_sourcing_eventbridge|event_sourcing_eventbridge_update_order	|	Events	|	Rule	|

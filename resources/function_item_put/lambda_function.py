@@ -19,6 +19,7 @@ def new_order(body):
                 'accountid': body['order']['accountid'],
                 'vendorid': body['order']["vendorid"],
                 'orderdate':body['order']["orderdate"],
+                'city':body['order']["city"],
                 'details':{
                     'coffeetype': body['order']['details']['coffeetype'],
                     'coffeesize': body['order']['details']["coffeesize"],
